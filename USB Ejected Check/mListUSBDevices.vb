@@ -46,6 +46,7 @@ Public Module mListUSBDevices
             frmMain.lstIgnoredDevices.Items.Add(newItem)
             newItem = Nothing
         Next
+        Return vbNull
     End Function
 
     Public Function DeinitializeSilentMode()
@@ -53,6 +54,7 @@ Public Module mListUSBDevices
         frmMain.lIgnoredDevices.Enabled = False
         frmMain.groupDetection.Enabled = True
         frmMain.btnTableRenew.Enabled = False
+        Return vbNull
     End Function
 
     Public Function WriteSettings()
@@ -127,5 +129,40 @@ Public Module mListUSBDevices
             'MsgBox(ex.Message, MsgBoxStyle.Critical)
         End Try
         Return vbNull
+    End Function
+
+    Public Function CreateShortcut()
+        Try
+            'Source: https://social.msdn.microsoft.com/Forums/en-US/333add2a-95e7-4fd8-8874-bf21b653cdac/create-shortcut-using-net
+            Dim wsh As Object = CreateObject("WScript.Shell")
+            wsh = CreateObject("WScript.Shell")
+            Dim MyShortcut, DesktopPath
+            ' Read desktop path using WshSpecialFolders object
+            DesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
+            ' Create a shortcut object on the desktop
+            MyShortcut = wsh.CreateShortcut(DesktopPath & "\USB Ejected Check.lnk")
+            ' Set shortcut object properties and save it
+            MyShortcut.TargetPath = wsh.ExpandEnvironmentStrings(CurDir() & "\" & My.Application.Info.AssemblyName & ".exe")
+            MyShortcut.Arguments = "/silent"
+            MyShortcut.WorkingDirectory = wsh.ExpandEnvironmentStrings(CurDir())
+            MyShortcut.WindowStyle = 4
+            'Save the shortcut
+            MyShortcut.Save()
+            Return True
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical)
+            Return False
+        End Try
+
+    End Function
+
+    Public Function RemoveShortcut()
+        Try
+            My.Computer.FileSystem.DeleteFile(Environment.GetFolderPath(Environment.SpecialFolder.Startup) & "\USB Ejected Check.lnk", FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin, FileIO.UICancelOption.ThrowException)
+            Return True
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical)
+            Return False
+        End Try
     End Function
 End Module

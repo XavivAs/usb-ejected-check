@@ -41,7 +41,7 @@
                 'Disable closing the application, and thus disabling the check, when the check is enabled.
                 e.Cancel = True
                 Hide()
-                notifyIcon.ShowBalloonTip(6000, "USB Ejected Check still running in the background", "If you want to close it, right-click and press ""Exit""", ToolTipIcon.Info)
+                notifyIcon.ShowBalloonTip(6000, "USB Ejected Check is still running in the background", "If you want to close it, right-click and press ""Exit""", ToolTipIcon.Info)
             End If
         End If
         WriteSettings()
@@ -132,7 +132,7 @@
     End Sub
 
     Private Sub btnAbout_Click(sender As Object, e As EventArgs) Handles btnAbout.Click
-        MsgBox("USB Ejected Check was created by Koenvh. Click on the logo to go to my website.", MsgBoxStyle.Information)
+        MsgBox("USB Ejected Check was created by Koenvh (koenvh.nl)." & vbCrLf & "Click on the logo bottom right to go to my website.", MsgBoxStyle.Information)
     End Sub
 
     Private Sub btnSoundFile_Click(sender As Object, e As EventArgs) Handles btnSoundFile.Click
@@ -186,6 +186,18 @@
             txtSoundFile.Enabled = False
             btnSoundFile.Enabled = False
             lOpenFile.Enabled = False
+        End If
+    End Sub
+
+    Private Sub Button1_Click_2(sender As Object, e As EventArgs) Handles btnCreateShortcut.Click
+        If CreateShortcut() = True Then
+            MsgBox("Startup entry created succesfully", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Private Sub btnRemoveShortcut_Click(sender As Object, e As EventArgs) Handles btnRemoveShortcut.Click
+        If RemoveShortcut() = True Then
+            MsgBox("Startup entry removed succesfully", MsgBoxStyle.Information)
         End If
     End Sub
 End Class

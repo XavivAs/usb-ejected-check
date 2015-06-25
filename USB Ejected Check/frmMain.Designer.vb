@@ -30,6 +30,7 @@ Partial Class frmMain
         Me.btnShowExample = New System.Windows.Forms.LinkLabel()
         Me.lDevice = New System.Windows.Forms.Label()
         Me.groupDetection = New System.Windows.Forms.GroupBox()
+        Me.btnDetectionHelp = New System.Windows.Forms.LinkLabel()
         Me.groupSettings = New System.Windows.Forms.GroupBox()
         Me.lOpenFile = New System.Windows.Forms.Label()
         Me.btnSoundFile = New System.Windows.Forms.Button()
@@ -46,6 +47,7 @@ Partial Class frmMain
         Me.btnAbout = New System.Windows.Forms.Button()
         Me.dlgSoundFile = New System.Windows.Forms.OpenFileDialog()
         Me.groupSilent = New System.Windows.Forms.GroupBox()
+        Me.btnTableRenew = New System.Windows.Forms.Button()
         Me.btnSilentModeHelp = New System.Windows.Forms.LinkLabel()
         Me.lIgnoredDevices = New System.Windows.Forms.Label()
         Me.lstIgnoredDevices = New System.Windows.Forms.ListView()
@@ -53,9 +55,9 @@ Partial Class frmMain
         Me.driveName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.rSilentMode = New System.Windows.Forms.CheckBox()
         Me.tooltipSilentMode = New System.Windows.Forms.ToolTip(Me.components)
-        Me.btnTableRenew = New System.Windows.Forms.Button()
-        Me.btnDetectionHelp = New System.Windows.Forms.LinkLabel()
         Me.picLogo = New System.Windows.Forms.PictureBox()
+        Me.btnCreateShortcut = New System.Windows.Forms.Button()
+        Me.btnRemoveShortcut = New System.Windows.Forms.Button()
         Me.groupDetection.SuspendLayout()
         Me.groupSettings.SuspendLayout()
         Me.contextNotify.SuspendLayout()
@@ -100,6 +102,7 @@ Partial Class frmMain
         Me.btnShowExample.TabIndex = 4
         Me.btnShowExample.TabStop = True
         Me.btnShowExample.Text = "Show example"
+        Me.tooltipSilentMode.SetToolTip(Me.btnShowExample, "Show an example of what happens when you leave your USB device in the computer.")
         '
         'lDevice
         '
@@ -123,6 +126,17 @@ Partial Class frmMain
         Me.groupDetection.TabIndex = 7
         Me.groupDetection.TabStop = False
         Me.groupDetection.Text = "Detection"
+        '
+        'btnDetectionHelp
+        '
+        Me.btnDetectionHelp.AutoSize = True
+        Me.btnDetectionHelp.Location = New System.Drawing.Point(56, 16)
+        Me.btnDetectionHelp.Name = "btnDetectionHelp"
+        Me.btnDetectionHelp.Size = New System.Drawing.Size(13, 13)
+        Me.btnDetectionHelp.TabIndex = 6
+        Me.btnDetectionHelp.TabStop = True
+        Me.btnDetectionHelp.Text = "?"
+        Me.tooltipSilentMode.SetToolTip(Me.btnDetectionHelp, resources.GetString("btnDetectionHelp.ToolTip"))
         '
         'groupSettings
         '
@@ -214,7 +228,7 @@ Partial Class frmMain
         'btnExit
         '
         Me.btnExit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnExit.Location = New System.Drawing.Point(12, 394)
+        Me.btnExit.Location = New System.Drawing.Point(12, 405)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(75, 23)
         Me.btnExit.TabIndex = 9
@@ -224,7 +238,7 @@ Partial Class frmMain
         'btnEject
         '
         Me.btnEject.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnEject.Location = New System.Drawing.Point(93, 394)
+        Me.btnEject.Location = New System.Drawing.Point(93, 405)
         Me.btnEject.Name = "btnEject"
         Me.btnEject.Size = New System.Drawing.Size(108, 23)
         Me.btnEject.TabIndex = 10
@@ -234,7 +248,7 @@ Partial Class frmMain
         'btnAbout
         '
         Me.btnAbout.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnAbout.Location = New System.Drawing.Point(207, 394)
+        Me.btnAbout.Location = New System.Drawing.Point(207, 405)
         Me.btnAbout.Name = "btnAbout"
         Me.btnAbout.Size = New System.Drawing.Size(75, 23)
         Me.btnAbout.TabIndex = 11
@@ -258,6 +272,16 @@ Partial Class frmMain
         Me.groupSilent.TabIndex = 12
         Me.groupSilent.TabStop = False
         Me.groupSilent.Text = "Silent mode"
+        '
+        'btnTableRenew
+        '
+        Me.btnTableRenew.Enabled = False
+        Me.btnTableRenew.Location = New System.Drawing.Point(207, 28)
+        Me.btnTableRenew.Name = "btnTableRenew"
+        Me.btnTableRenew.Size = New System.Drawing.Size(75, 23)
+        Me.btnTableRenew.TabIndex = 5
+        Me.btnTableRenew.Text = "Renew"
+        Me.btnTableRenew.UseVisualStyleBackColor = True
         '
         'btnSilentModeHelp
         '
@@ -320,45 +344,44 @@ Partial Class frmMain
         Me.tooltipSilentMode.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.tooltipSilentMode.ToolTipTitle = "Info"
         '
-        'btnTableRenew
-        '
-        Me.btnTableRenew.Enabled = False
-        Me.btnTableRenew.Location = New System.Drawing.Point(207, 28)
-        Me.btnTableRenew.Name = "btnTableRenew"
-        Me.btnTableRenew.Size = New System.Drawing.Size(75, 23)
-        Me.btnTableRenew.TabIndex = 5
-        Me.btnTableRenew.Text = "Renew"
-        Me.btnTableRenew.UseVisualStyleBackColor = True
-        '
-        'btnDetectionHelp
-        '
-        Me.btnDetectionHelp.AutoSize = True
-        Me.btnDetectionHelp.Location = New System.Drawing.Point(56, 16)
-        Me.btnDetectionHelp.Name = "btnDetectionHelp"
-        Me.btnDetectionHelp.Size = New System.Drawing.Size(13, 13)
-        Me.btnDetectionHelp.TabIndex = 6
-        Me.btnDetectionHelp.TabStop = True
-        Me.btnDetectionHelp.Text = "?"
-        Me.tooltipSilentMode.SetToolTip(Me.btnDetectionHelp, resources.GetString("btnDetectionHelp.ToolTip"))
-        '
         'picLogo
         '
         Me.picLogo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.picLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.picLogo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.picLogo.Image = Global.USB_Ejected_Check.My.Resources.Resources.iconKoenvh
-        Me.picLogo.Location = New System.Drawing.Point(289, 377)
+        Me.picLogo.Location = New System.Drawing.Point(289, 383)
         Me.picLogo.Name = "picLogo"
         Me.picLogo.Size = New System.Drawing.Size(50, 50)
         Me.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.picLogo.TabIndex = 6
         Me.picLogo.TabStop = False
         '
+        'btnCreateShortcut
+        '
+        Me.btnCreateShortcut.Location = New System.Drawing.Point(155, 376)
+        Me.btnCreateShortcut.Name = "btnCreateShortcut"
+        Me.btnCreateShortcut.Size = New System.Drawing.Size(127, 23)
+        Me.btnCreateShortcut.TabIndex = 13
+        Me.btnCreateShortcut.Text = "Create startup entry"
+        Me.btnCreateShortcut.UseVisualStyleBackColor = True
+        '
+        'btnRemoveShortcut
+        '
+        Me.btnRemoveShortcut.Location = New System.Drawing.Point(12, 376)
+        Me.btnRemoveShortcut.Name = "btnRemoveShortcut"
+        Me.btnRemoveShortcut.Size = New System.Drawing.Size(137, 23)
+        Me.btnRemoveShortcut.TabIndex = 14
+        Me.btnRemoveShortcut.Text = "Remove startup entry"
+        Me.btnRemoveShortcut.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(338, 426)
+        Me.ClientSize = New System.Drawing.Size(338, 432)
+        Me.Controls.Add(Me.btnRemoveShortcut)
+        Me.Controls.Add(Me.btnCreateShortcut)
         Me.Controls.Add(Me.groupSilent)
         Me.Controls.Add(Me.btnAbout)
         Me.Controls.Add(Me.btnEject)
@@ -416,5 +439,7 @@ Partial Class frmMain
     Friend WithEvents tooltipSilentMode As System.Windows.Forms.ToolTip
     Friend WithEvents btnTableRenew As System.Windows.Forms.Button
     Friend WithEvents btnDetectionHelp As System.Windows.Forms.LinkLabel
+    Friend WithEvents btnCreateShortcut As System.Windows.Forms.Button
+    Friend WithEvents btnRemoveShortcut As System.Windows.Forms.Button
 
 End Class
