@@ -37,7 +37,7 @@
 
             End If
         ElseIf e.CloseReason = CloseReason.UserClosing Then
-            If rEnabled.Checked Then
+            If rEnabled.Checked Or rSilentMode.Checked Then
                 'Disable closing the application, and thus disabling the check, when the check is enabled.
                 e.Cancel = True
                 Hide()
