@@ -22,7 +22,8 @@
       <h2>
 <a id="usb-ejected-check" class="anchor" href="#usb-ejected-check" aria-hidden="true"><span class="octicon octicon-link"></span></a>USB Ejected Check</h2>
 
-<p>USB Ejected Check is a simple application for checking whether a USB Device has been ejected from the computer before shutting down. That's all there is to it at the moment. If it is still in the computer, a message and sound will be played. </p>
+<p>USB Ejected Check is a simple application for checking whether a USB Device has been ejected from the computer before shutting down. That's all there is to it at the moment. If it is still in the computer, a message and sound will be played. 
+*<em>Download <a href="https://github.com/Koenvh1/usb-ejected-check/blob/master/USB%20Ejected%20Check/bin/Release/USB%20Ejected%20Check.exe">here</a> *</em></p>
 
 <h3>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h3>
@@ -35,6 +36,11 @@
 <li>Show a message.</li>
 <li>Run silently on boot, monitoring new USB devices and adding them to the watch list.</li>
 </ul>
+
+<h3>
+<a id="how-does-it-work-the-technical-side" class="anchor" href="#how-does-it-work-the-technical-side" aria-hidden="true"><span class="octicon octicon-link"></span></a>How does it work? (The technical side)</h3>
+
+<p>It works in the following manner: The main form is constantly running in the background. When the computer shuts down, the form (and the whole application) will be closed. When that form closes, it checks for the close reason. If that is equal to Windows shutdown, it will invoke checking the USB drive. If it is still there, it will cancel the shutdown and display the message. </p>
 
 <h3>
 <a id="licence" class="anchor" href="#licence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Licence</h3>
