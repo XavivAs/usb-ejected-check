@@ -54,6 +54,7 @@ Partial Class frmMain
         Me.rSilentMode = New System.Windows.Forms.CheckBox()
         Me.tooltipSilentMode = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnTableRenew = New System.Windows.Forms.Button()
+        Me.btnDetectionHelp = New System.Windows.Forms.LinkLabel()
         Me.picLogo = New System.Windows.Forms.PictureBox()
         Me.groupDetection.SuspendLayout()
         Me.groupSettings.SuspendLayout()
@@ -93,7 +94,7 @@ Partial Class frmMain
         'btnShowExample
         '
         Me.btnShowExample.AutoSize = True
-        Me.btnShowExample.Location = New System.Drawing.Point(7, 75)
+        Me.btnShowExample.Location = New System.Drawing.Point(250, 9)
         Me.btnShowExample.Name = "btnShowExample"
         Me.btnShowExample.Size = New System.Drawing.Size(76, 13)
         Me.btnShowExample.TabIndex = 4
@@ -111,10 +112,10 @@ Partial Class frmMain
         '
         'groupDetection
         '
+        Me.groupDetection.Controls.Add(Me.btnDetectionHelp)
         Me.groupDetection.Controls.Add(Me.lDevice)
         Me.groupDetection.Controls.Add(Me.cUSBDevices)
         Me.groupDetection.Controls.Add(Me.btnRefresh)
-        Me.groupDetection.Controls.Add(Me.btnShowExample)
         Me.groupDetection.Controls.Add(Me.rEnabled)
         Me.groupDetection.Location = New System.Drawing.Point(12, 12)
         Me.groupDetection.Name = "groupDetection"
@@ -329,6 +330,17 @@ Partial Class frmMain
         Me.btnTableRenew.Text = "Renew"
         Me.btnTableRenew.UseVisualStyleBackColor = True
         '
+        'btnDetectionHelp
+        '
+        Me.btnDetectionHelp.AutoSize = True
+        Me.btnDetectionHelp.Location = New System.Drawing.Point(56, 16)
+        Me.btnDetectionHelp.Name = "btnDetectionHelp"
+        Me.btnDetectionHelp.Size = New System.Drawing.Size(13, 13)
+        Me.btnDetectionHelp.TabIndex = 6
+        Me.btnDetectionHelp.TabStop = True
+        Me.btnDetectionHelp.Text = "?"
+        Me.tooltipSilentMode.SetToolTip(Me.btnDetectionHelp, resources.GetString("btnDetectionHelp.ToolTip"))
+        '
         'picLogo
         '
         Me.picLogo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -350,6 +362,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.groupSilent)
         Me.Controls.Add(Me.btnAbout)
         Me.Controls.Add(Me.btnEject)
+        Me.Controls.Add(Me.btnShowExample)
         Me.Controls.Add(Me.btnExit)
         Me.Controls.Add(Me.groupSettings)
         Me.Controls.Add(Me.groupDetection)
@@ -402,5 +415,6 @@ Partial Class frmMain
     Friend WithEvents btnSilentModeHelp As System.Windows.Forms.LinkLabel
     Friend WithEvents tooltipSilentMode As System.Windows.Forms.ToolTip
     Friend WithEvents btnTableRenew As System.Windows.Forms.Button
+    Friend WithEvents btnDetectionHelp As System.Windows.Forms.LinkLabel
 
 End Class

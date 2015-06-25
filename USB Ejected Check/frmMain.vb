@@ -48,11 +48,26 @@
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
         rEnabled.Appearance = System.Windows.Forms.Appearance.Button
         'Create first list 
         ReadSettings()
         'Then initialize/scan USB devices
         ListUSBDevices()
+    End Sub
+
+    Private Sub frmMain_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        'Let's check whether it has to run silently
+        For Each Argument As String In My.Application.CommandLineArgs
+            Select Case Trim(LCase(Argument))
+                Case "/silent"
+                    Me.Visible = False
+                Case "/loud"
+                    MsgBox("I can hear you!", MsgBoxStyle.Information)
+
+            End Select
+        Next
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click

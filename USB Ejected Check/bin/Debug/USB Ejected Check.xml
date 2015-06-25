@@ -15,6 +15,10 @@ USBEjectedCheck
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
 </summary>
+</member><member name="P:USB_Ejected_Check.My.Resources.Resources.ejectNotification">
+	<summary>
+  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
 </member><member name="P:USB_Ejected_Check.My.Resources.Resources.iconEject">
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -22,10 +26,6 @@ USBEjectedCheck
 </member><member name="P:USB_Ejected_Check.My.Resources.Resources.iconKoenvh">
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member><member name="P:USB_Ejected_Check.My.Resources.Resources.notificationSound">
-	<summary>
-  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
 </member><member name="P:USB_Ejected_Check.My.Resources.Resources.table_edit">
 	<summary>

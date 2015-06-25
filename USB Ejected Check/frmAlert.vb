@@ -12,7 +12,7 @@
         tmCloseMessage.Start()
         If frmMain.rPlaySound.Checked Then
             If frmMain.txtSoundFile.Text = "" Then
-                My.Computer.Audio.Play(My.Resources.notificationSound, AudioPlayMode.BackgroundLoop)
+                My.Computer.Audio.Play(My.Resources.ejectNotification, AudioPlayMode.BackgroundLoop)
             Else
                 My.Computer.Audio.Play(frmMain.txtSoundFile.Text, AudioPlayMode.BackgroundLoop)
             End If

@@ -1,0 +1,5 @@
+USB Ejected Check is able to:
+- Check whether an USB device is still present at shutdown.
+- Play a sound when that is the case.
+- Show a message.
+- Run silently on boot, monitoring new USB devices and adding them to the watch list.
