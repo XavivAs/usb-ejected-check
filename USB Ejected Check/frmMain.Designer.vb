@@ -28,9 +28,12 @@ Partial Class frmMain
         Me.btnRefresh = New System.Windows.Forms.Button()
         Me.rEnabled = New System.Windows.Forms.CheckBox()
         Me.btnShowExample = New System.Windows.Forms.LinkLabel()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lDevice = New System.Windows.Forms.Label()
         Me.groupDetection = New System.Windows.Forms.GroupBox()
         Me.groupSettings = New System.Windows.Forms.GroupBox()
+        Me.lOpenFile = New System.Windows.Forms.Label()
+        Me.btnSoundFile = New System.Windows.Forms.Button()
+        Me.txtSoundFile = New System.Windows.Forms.TextBox()
         Me.rPlaySound = New System.Windows.Forms.CheckBox()
         Me.notifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.contextNotify = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -41,14 +44,21 @@ Partial Class frmMain
         Me.btnExit = New System.Windows.Forms.Button()
         Me.btnEject = New System.Windows.Forms.Button()
         Me.btnAbout = New System.Windows.Forms.Button()
-        Me.picLogo = New System.Windows.Forms.PictureBox()
-        Me.txtSoundFile = New System.Windows.Forms.TextBox()
-        Me.btnSoundFile = New System.Windows.Forms.Button()
         Me.dlgSoundFile = New System.Windows.Forms.OpenFileDialog()
-        Me.lOpenFile = New System.Windows.Forms.Label()
+        Me.groupSilent = New System.Windows.Forms.GroupBox()
+        Me.btnSilentModeHelp = New System.Windows.Forms.LinkLabel()
+        Me.lIgnoredDevices = New System.Windows.Forms.Label()
+        Me.lstIgnoredDevices = New System.Windows.Forms.ListView()
+        Me.driveLetter = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.driveName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.rSilentMode = New System.Windows.Forms.CheckBox()
+        Me.tooltipSilentMode = New System.Windows.Forms.ToolTip(Me.components)
+        Me.btnTableRenew = New System.Windows.Forms.Button()
+        Me.picLogo = New System.Windows.Forms.PictureBox()
         Me.groupDetection.SuspendLayout()
         Me.groupSettings.SuspendLayout()
         Me.contextNotify.SuspendLayout()
+        Me.groupSilent.SuspendLayout()
         CType(Me.picLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -90,18 +100,18 @@ Partial Class frmMain
         Me.btnShowExample.TabStop = True
         Me.btnShowExample.Text = "Show example"
         '
-        'Label1
+        'lDevice
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 16)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(44, 13)
-        Me.Label1.TabIndex = 5
-        Me.Label1.Text = "Device:"
+        Me.lDevice.AutoSize = True
+        Me.lDevice.Location = New System.Drawing.Point(6, 16)
+        Me.lDevice.Name = "lDevice"
+        Me.lDevice.Size = New System.Drawing.Size(44, 13)
+        Me.lDevice.TabIndex = 5
+        Me.lDevice.Text = "Device:"
         '
         'groupDetection
         '
-        Me.groupDetection.Controls.Add(Me.Label1)
+        Me.groupDetection.Controls.Add(Me.lDevice)
         Me.groupDetection.Controls.Add(Me.cUSBDevices)
         Me.groupDetection.Controls.Add(Me.btnRefresh)
         Me.groupDetection.Controls.Add(Me.btnShowExample)
@@ -125,6 +135,34 @@ Partial Class frmMain
         Me.groupSettings.TabIndex = 8
         Me.groupSettings.TabStop = False
         Me.groupSettings.Text = "Sound"
+        '
+        'lOpenFile
+        '
+        Me.lOpenFile.AutoSize = True
+        Me.lOpenFile.Enabled = False
+        Me.lOpenFile.Location = New System.Drawing.Point(6, 43)
+        Me.lOpenFile.Name = "lOpenFile"
+        Me.lOpenFile.Size = New System.Drawing.Size(203, 13)
+        Me.lOpenFile.TabIndex = 3
+        Me.lOpenFile.Text = "Sound file to use (leave blank for default):"
+        '
+        'btnSoundFile
+        '
+        Me.btnSoundFile.Enabled = False
+        Me.btnSoundFile.Location = New System.Drawing.Point(231, 57)
+        Me.btnSoundFile.Name = "btnSoundFile"
+        Me.btnSoundFile.Size = New System.Drawing.Size(75, 23)
+        Me.btnSoundFile.TabIndex = 2
+        Me.btnSoundFile.Text = "Choose file"
+        Me.btnSoundFile.UseVisualStyleBackColor = True
+        '
+        'txtSoundFile
+        '
+        Me.txtSoundFile.Enabled = False
+        Me.txtSoundFile.Location = New System.Drawing.Point(9, 59)
+        Me.txtSoundFile.Name = "txtSoundFile"
+        Me.txtSoundFile.Size = New System.Drawing.Size(218, 20)
+        Me.txtSoundFile.TabIndex = 1
         '
         'rPlaySound
         '
@@ -174,7 +212,8 @@ Partial Class frmMain
         '
         'btnExit
         '
-        Me.btnExit.Location = New System.Drawing.Point(12, 236)
+        Me.btnExit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnExit.Location = New System.Drawing.Point(12, 394)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(75, 23)
         Me.btnExit.TabIndex = 9
@@ -183,7 +222,8 @@ Partial Class frmMain
         '
         'btnEject
         '
-        Me.btnEject.Location = New System.Drawing.Point(93, 236)
+        Me.btnEject.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnEject.Location = New System.Drawing.Point(93, 394)
         Me.btnEject.Name = "btnEject"
         Me.btnEject.Size = New System.Drawing.Size(108, 23)
         Me.btnEject.TabIndex = 10
@@ -192,12 +232,102 @@ Partial Class frmMain
         '
         'btnAbout
         '
-        Me.btnAbout.Location = New System.Drawing.Point(207, 236)
+        Me.btnAbout.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnAbout.Location = New System.Drawing.Point(207, 394)
         Me.btnAbout.Name = "btnAbout"
         Me.btnAbout.Size = New System.Drawing.Size(75, 23)
         Me.btnAbout.TabIndex = 11
         Me.btnAbout.Text = "About"
         Me.btnAbout.UseVisualStyleBackColor = True
+        '
+        'dlgSoundFile
+        '
+        Me.dlgSoundFile.Filter = "WAVE (*.wav)|*.wav"
+        '
+        'groupSilent
+        '
+        Me.groupSilent.Controls.Add(Me.btnTableRenew)
+        Me.groupSilent.Controls.Add(Me.btnSilentModeHelp)
+        Me.groupSilent.Controls.Add(Me.lIgnoredDevices)
+        Me.groupSilent.Controls.Add(Me.lstIgnoredDevices)
+        Me.groupSilent.Controls.Add(Me.rSilentMode)
+        Me.groupSilent.Location = New System.Drawing.Point(12, 220)
+        Me.groupSilent.Name = "groupSilent"
+        Me.groupSilent.Size = New System.Drawing.Size(314, 151)
+        Me.groupSilent.TabIndex = 12
+        Me.groupSilent.TabStop = False
+        Me.groupSilent.Text = "Silent mode"
+        '
+        'btnSilentModeHelp
+        '
+        Me.btnSilentModeHelp.AutoSize = True
+        Me.btnSilentModeHelp.Location = New System.Drawing.Point(130, 19)
+        Me.btnSilentModeHelp.Name = "btnSilentModeHelp"
+        Me.btnSilentModeHelp.Size = New System.Drawing.Size(13, 13)
+        Me.btnSilentModeHelp.TabIndex = 3
+        Me.btnSilentModeHelp.TabStop = True
+        Me.btnSilentModeHelp.Text = "?"
+        Me.tooltipSilentMode.SetToolTip(Me.btnSilentModeHelp, resources.GetString("btnSilentModeHelp.ToolTip"))
+        '
+        'lIgnoredDevices
+        '
+        Me.lIgnoredDevices.AutoSize = True
+        Me.lIgnoredDevices.Enabled = False
+        Me.lIgnoredDevices.Location = New System.Drawing.Point(7, 38)
+        Me.lIgnoredDevices.Name = "lIgnoredDevices"
+        Me.lIgnoredDevices.Size = New System.Drawing.Size(140, 13)
+        Me.lIgnoredDevices.TabIndex = 2
+        Me.lIgnoredDevices.Text = "Devices that will be ignored:"
+        '
+        'lstIgnoredDevices
+        '
+        Me.lstIgnoredDevices.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.driveLetter, Me.driveName})
+        Me.lstIgnoredDevices.Enabled = False
+        Me.lstIgnoredDevices.FullRowSelect = True
+        Me.lstIgnoredDevices.GridLines = True
+        Me.lstIgnoredDevices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.lstIgnoredDevices.Location = New System.Drawing.Point(9, 54)
+        Me.lstIgnoredDevices.Name = "lstIgnoredDevices"
+        Me.lstIgnoredDevices.ShowItemToolTips = True
+        Me.lstIgnoredDevices.Size = New System.Drawing.Size(273, 91)
+        Me.lstIgnoredDevices.TabIndex = 0
+        Me.lstIgnoredDevices.UseCompatibleStateImageBehavior = False
+        Me.lstIgnoredDevices.View = System.Windows.Forms.View.Details
+        '
+        'driveLetter
+        '
+        Me.driveLetter.Text = "Drive letter"
+        Me.driveLetter.Width = 76
+        '
+        'driveName
+        '
+        Me.driveName.Text = "Drive name"
+        Me.driveName.Width = 164
+        '
+        'rSilentMode
+        '
+        Me.rSilentMode.AutoSize = True
+        Me.rSilentMode.Location = New System.Drawing.Point(10, 18)
+        Me.rSilentMode.Name = "rSilentMode"
+        Me.rSilentMode.Size = New System.Drawing.Size(121, 17)
+        Me.rSilentMode.TabIndex = 1
+        Me.rSilentMode.Text = "Activate silent mode"
+        Me.rSilentMode.UseVisualStyleBackColor = True
+        '
+        'tooltipSilentMode
+        '
+        Me.tooltipSilentMode.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.tooltipSilentMode.ToolTipTitle = "Info"
+        '
+        'btnTableRenew
+        '
+        Me.btnTableRenew.Enabled = False
+        Me.btnTableRenew.Location = New System.Drawing.Point(207, 28)
+        Me.btnTableRenew.Name = "btnTableRenew"
+        Me.btnTableRenew.Size = New System.Drawing.Size(75, 23)
+        Me.btnTableRenew.TabIndex = 5
+        Me.btnTableRenew.Text = "Renew"
+        Me.btnTableRenew.UseVisualStyleBackColor = True
         '
         'picLogo
         '
@@ -205,47 +335,19 @@ Partial Class frmMain
         Me.picLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.picLogo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.picLogo.Image = Global.USB_Ejected_Check.My.Resources.Resources.iconKoenvh
-        Me.picLogo.Location = New System.Drawing.Point(288, 218)
+        Me.picLogo.Location = New System.Drawing.Point(289, 377)
         Me.picLogo.Name = "picLogo"
         Me.picLogo.Size = New System.Drawing.Size(50, 50)
         Me.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.picLogo.TabIndex = 6
         Me.picLogo.TabStop = False
         '
-        'txtSoundFile
-        '
-        Me.txtSoundFile.Location = New System.Drawing.Point(9, 59)
-        Me.txtSoundFile.Name = "txtSoundFile"
-        Me.txtSoundFile.Size = New System.Drawing.Size(218, 20)
-        Me.txtSoundFile.TabIndex = 1
-        '
-        'btnSoundFile
-        '
-        Me.btnSoundFile.Location = New System.Drawing.Point(233, 57)
-        Me.btnSoundFile.Name = "btnSoundFile"
-        Me.btnSoundFile.Size = New System.Drawing.Size(75, 23)
-        Me.btnSoundFile.TabIndex = 2
-        Me.btnSoundFile.Text = "Choose file"
-        Me.btnSoundFile.UseVisualStyleBackColor = True
-        '
-        'dlgSoundFile
-        '
-        Me.dlgSoundFile.Filter = "WAVE (*.wav)|*.wav"
-        '
-        'lOpenFile
-        '
-        Me.lOpenFile.AutoSize = True
-        Me.lOpenFile.Location = New System.Drawing.Point(6, 43)
-        Me.lOpenFile.Name = "lOpenFile"
-        Me.lOpenFile.Size = New System.Drawing.Size(203, 13)
-        Me.lOpenFile.TabIndex = 3
-        Me.lOpenFile.Text = "Sound file to use (leave blank for default):"
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(338, 268)
+        Me.ClientSize = New System.Drawing.Size(338, 426)
+        Me.Controls.Add(Me.groupSilent)
         Me.Controls.Add(Me.btnAbout)
         Me.Controls.Add(Me.btnEject)
         Me.Controls.Add(Me.btnExit)
@@ -262,6 +364,8 @@ Partial Class frmMain
         Me.groupSettings.ResumeLayout(False)
         Me.groupSettings.PerformLayout()
         Me.contextNotify.ResumeLayout(False)
+        Me.groupSilent.ResumeLayout(False)
+        Me.groupSilent.PerformLayout()
         CType(Me.picLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -271,7 +375,7 @@ Partial Class frmMain
     Friend WithEvents btnRefresh As System.Windows.Forms.Button
     Friend WithEvents rEnabled As System.Windows.Forms.CheckBox
     Friend WithEvents btnShowExample As System.Windows.Forms.LinkLabel
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lDevice As System.Windows.Forms.Label
     Friend WithEvents picLogo As System.Windows.Forms.PictureBox
     Friend WithEvents groupDetection As System.Windows.Forms.GroupBox
     Friend WithEvents groupSettings As System.Windows.Forms.GroupBox
@@ -289,5 +393,14 @@ Partial Class frmMain
     Friend WithEvents btnSoundFile As System.Windows.Forms.Button
     Friend WithEvents txtSoundFile As System.Windows.Forms.TextBox
     Friend WithEvents dlgSoundFile As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents groupSilent As System.Windows.Forms.GroupBox
+    Friend WithEvents lstIgnoredDevices As System.Windows.Forms.ListView
+    Friend WithEvents driveLetter As System.Windows.Forms.ColumnHeader
+    Friend WithEvents driveName As System.Windows.Forms.ColumnHeader
+    Friend WithEvents lIgnoredDevices As System.Windows.Forms.Label
+    Friend WithEvents rSilentMode As System.Windows.Forms.CheckBox
+    Friend WithEvents btnSilentModeHelp As System.Windows.Forms.LinkLabel
+    Friend WithEvents tooltipSilentMode As System.Windows.Forms.ToolTip
+    Friend WithEvents btnTableRenew As System.Windows.Forms.Button
 
 End Class

@@ -148,6 +148,11 @@
   <ItemGroup>
     <None Include="Resources\sounds-955-lace.wav" />
     <None Include="Resources\control-eject-blue-icon.png" />
+    <None Include="Resources\table_row_delete.png" />
+    <None Include="Resources\table_row_insert.png" />
+    <None Include="Resources\table_refresh.png" />
+    <None Include="Resources\table_edit.png" />
+    <None Include="Resources\table_save.png" />
     <Content Include="USB controle_32512.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,26 @@ USBEjectedCheck
 	<summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
+</member><member name="P:USB_Ejected_Check.My.Resources.Resources.table_edit">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:USB_Ejected_Check.My.Resources.Resources.table_refresh">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:USB_Ejected_Check.My.Resources.Resources.table_row_delete">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:USB_Ejected_Check.My.Resources.Resources.table_row_insert">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:USB_Ejected_Check.My.Resources.Resources.table_save">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
 </member><member name="T:USB_Ejected_Check.My.Resources.Resources">
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.

@@ -70,7 +70,7 @@ Partial Class frmAlert
         Me.Name = "frmAlert"
         Me.Opacity = 0.6R
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Please eject your USB drive"
+        Me.Text = "h"
         Me.TopMost = True
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)

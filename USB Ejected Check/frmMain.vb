@@ -2,6 +2,7 @@
     Public selectedDrive As String = "C:\"
 
     Private Sub frmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        'If 1 = 1 Then '(Just for testing purposes, because I don't want to shutdown my PC every time.
         If e.CloseReason = CloseReason.WindowsShutDown Then
             'Disable shutdown of program when the CloseReason is a shutdown, allow all other cases.
             If rEnabled.Checked Then
@@ -12,6 +13,28 @@
                     'Load the form, displaying a message (in case of no sound)
                     frmAlert.Show()
                 End If
+            ElseIf rSilentMode.Enabled = True Then
+                ListUSBDevices()
+                'Dim IgnoredArray As New ArrayList
+                'For Each item In lstIgnoredDevices.Items
+                '    IgnoredArray.Add(item.subitems(0).text)
+                'Next
+                For Each drive In arrayDriveList
+                    'Loop through all drives that are currently connected
+                    For Each item In lstIgnoredDevices.Items
+                        'Loop through all ignored drives, and check if it exist
+                        If item.subitems(0).Text = drive Then
+                            Exit For
+                        Else
+                            'When reached the final item, and it still hasn't been found on the "ignored" list, display the message.
+                            If item.index = lstIgnoredDevices.Items.Count - 1 Then
+                                e.Cancel = True
+                                frmAlert.Show()
+                            End If
+                        End If
+                    Next
+                Next
+
             End If
         ElseIf e.CloseReason = CloseReason.UserClosing Then
             If rEnabled.Checked Then
@@ -28,6 +51,7 @@
         rEnabled.Appearance = System.Windows.Forms.Appearance.Button
         'Create first list 
         ReadSettings()
+        'Then initialize/scan USB devices
         ListUSBDevices()
     End Sub
 
@@ -105,5 +129,48 @@
     Private Sub notifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles notifyIcon.MouseDoubleClick
         Show()
         Activate()
+    End Sub
+
+    Private Sub btnSilentModeHelp_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles btnSilentModeHelp.LinkClicked
+
+    End Sub
+
+    Private Sub btnSilentModeHelp_MouseHover(sender As Object, e As EventArgs) Handles btnSilentModeHelp.MouseHover
+
+    End Sub
+
+    Private Sub rSilentMode_CheckedChanged(sender As Object, e As EventArgs) Handles rSilentMode.CheckedChanged
+        If rSilentMode.Checked Then
+            InitializeSilentMode()
+        Else
+            DeinitializeSilentMode()
+        End If
+    End Sub
+
+    Private Sub btnTableRefresh_Click(sender As Object, e As EventArgs) Handles btnTableRenew.Click
+        InitializeSilentMode()
+    End Sub
+
+    Private Sub btnTableRemove_Click(sender As Object, e As EventArgs)
+        Try
+            For Each item In lstIgnoredDevices.SelectedItems
+                lstIgnoredDevices.Items.Remove(item)
+            Next
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical)
+        End Try
+
+    End Sub
+
+    Private Sub rPlaySound_CheckedChanged(sender As Object, e As EventArgs) Handles rPlaySound.CheckedChanged
+        If rPlaySound.Checked Then
+            txtSoundFile.Enabled = True
+            btnSoundFile.Enabled = True
+            lOpenFile.Enabled = True
+        Else
+            txtSoundFile.Enabled = False
+            btnSoundFile.Enabled = False
+            lOpenFile.Enabled = False
+        End If
     End Sub
 End Class
