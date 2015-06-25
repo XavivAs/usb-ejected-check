@@ -48,8 +48,6 @@
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-
         rEnabled.Appearance = System.Windows.Forms.Appearance.Button
         'Create first list 
         ReadSettings()
@@ -144,14 +142,6 @@
     Private Sub notifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles notifyIcon.MouseDoubleClick
         Show()
         Activate()
-    End Sub
-
-    Private Sub btnSilentModeHelp_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles btnSilentModeHelp.LinkClicked
-
-    End Sub
-
-    Private Sub btnSilentModeHelp_MouseHover(sender As Object, e As EventArgs) Handles btnSilentModeHelp.MouseHover
-
     End Sub
 
     Private Sub rSilentMode_CheckedChanged(sender As Object, e As EventArgs) Handles rSilentMode.CheckedChanged
