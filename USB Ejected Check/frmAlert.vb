@@ -10,14 +10,7 @@
 
     Private Sub frmAlert_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         tmCloseMessage.Start()
-        If frmMain.rPlaySound.Checked Then
-            If frmMain.txtSoundFile.Text = "" Then
-                My.Computer.Audio.Play(My.Resources.ejectNotification, AudioPlayMode.BackgroundLoop)
-            Else
-                My.Computer.Audio.Play(frmMain.txtSoundFile.Text, AudioPlayMode.BackgroundLoop)
-            End If
-
-        End If
+        My.Computer.Audio.Play(My.Resources.ejectNotification, AudioPlayMode.BackgroundLoop)
     End Sub
 
     Private Sub tmCloseMessage_Tick(sender As Object, e As EventArgs) Handles tmCloseMessage.Tick

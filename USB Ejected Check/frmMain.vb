@@ -1,11 +1,12 @@
 ﻿Public Class frmMain
     Public selectedDrive As String = "C:\"
+    Public detectionEnabled As Boolean = False
 
     Private Sub frmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        'If 1 = 1 Then '(Just for testing purposes, because I don't want to shutdown my PC every time.
+        'If 1 = 1 Then '(Just for testing purposes, because I don't want to shutdown my PC every time).
         If e.CloseReason = CloseReason.WindowsShutDown Then
             'Disable shutdown of program when the CloseReason is a shutdown, allow all other cases.
-            If rEnabled.Checked Then
+            If detectionEnabled Then
                 If My.Computer.FileSystem.DirectoryExists(selectedDrive) = True Then
                     'Only execute when drive is still present
                     'Try cancelling the shutdown 
@@ -15,11 +16,7 @@
                 End If
             ElseIf rSilentMode.Enabled = True Then
                 ListUSBDevices()
-                'Dim IgnoredArray As New ArrayList
-                'For Each item In lstIgnoredDevices.Items
-                '    IgnoredArray.Add(item.subitems(0).text)
-                'Next
-                For Each drive In arrayDriveList
+                For Each drive In arrayDrives
                     'Loop through all drives that are currently connected
                     For Each item In lstIgnoredDevices.Items
                         'Loop through all ignored drives, and check if it exist
@@ -37,34 +34,45 @@
 
             End If
         ElseIf e.CloseReason = CloseReason.UserClosing Then
-            If rEnabled.Checked Or rSilentMode.Checked Then
+            If detectionEnabled Or rSilentMode.Checked Then
                 'Disable closing the application, and thus disabling the check, when the check is enabled.
                 e.Cancel = True
                 Hide()
-                notifyIcon.ShowBalloonTip(6000, "USB Ejected Check is still running in the background", "If you want to close it, right-click and press ""Exit""", ToolTipIcon.Info)
+                'notifyIcon.ShowBalloonTip(6000, "USB Ejected Check is still running in the background", "If you want to close it, right-click and press ""Exit""", ToolTipIcon.Info)
             End If
         End If
-        WriteSettings()
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CheckRunFromUSB()
+
         rEnabled.Appearance = System.Windows.Forms.Appearance.Button
-        'Create first list 
-        ReadSettings()
         'Then initialize/scan USB devices
         ListUSBDevices()
     End Sub
 
     Private Sub frmMain_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        'Let's check whether it has to run silently
+        'Let's check what arguments it got
         For Each Argument As String In My.Application.CommandLineArgs
-            Select Case Trim(LCase(Argument))
-                Case "/silent"
-                    Me.Visible = False
-                Case "/loud"
-                    MsgBox("I can hear you!", MsgBoxStyle.Information)
-
-            End Select
+            Dim trimArgument As String = Trim(LCase(Argument))
+            'Silent, enable silent mode and hide it...
+            If trimArgument = "/silent" Then
+                InitializeSilentMode()
+                Hide()
+            End If
+            'Automatic mode, basically immediately engage with the given letter
+            If trimArgument.StartsWith("/auto=") Then
+                Dim letter As String = trimArgument.Replace("/auto=", "").ToUpper()
+                ToggleDetection(letter)
+                For i = 0 To arrayDrives.Count
+                    If arrayDrives(i)(0) = letter Then
+                        cUSBDevices.SelectedIndex = i
+                        Exit For
+                    End If
+                Next
+                Hide()
+                notifyIcon.ShowBalloonTip(4000, "Drive " & letter & " is now protected", "You will be notified when you shut off the computer without ejecting it", ToolTipIcon.Info)
+            End If
         Next
     End Sub
 
@@ -72,23 +80,24 @@
         ListUSBDevices()
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles rEnabled.CheckedChanged
-        If rEnabled.Checked Then
-            If cUSBDevices.Text = "" Then
-                'Check for a valid USB device string
-                MsgBox("Please select a device first.", MsgBoxStyle.Exclamation)
-                rEnabled.Checked = False
-                Exit Sub
-            End If
+    Private Sub rEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles rEnabled.CheckedChanged
+
+    End Sub
+
+    Sub ToggleDetection(ByVal selected As String)
+        If detectionEnabled = False Then
             rEnabled.Text = "Disable"
+            rEnabled.Checked = True
             btnRefresh.Enabled = False
             cUSBDevices.Enabled = False
-            selectedDrive = arrayDriveList.Item(cUSBDevices.SelectedIndex)
-
+            selectedDrive = selected
+            detectionEnabled = True
         Else
             rEnabled.Text = "Enable"
+            rEnabled.Checked = False
             btnRefresh.Enabled = True
             cUSBDevices.Enabled = True
+            detectionEnabled = False
         End If
     End Sub
 
@@ -96,47 +105,13 @@
         frmAlert.Show()
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles picLogo.Click
+    Private Sub picLogo_Click(sender As Object, e As EventArgs) Handles picLogo.Click
         Process.Start("http://koenvh.nl")
-    End Sub
-
-    Private Sub ExitProgramToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitProgramToolStripMenuItem.Click
-        Application.Exit()
-    End Sub
-    Private Sub EjectUSB()
-        Try
-            Shell("RunDll32.exe shell32.dll,Control_RunDLL HotPlug.dll")
-            Application.Exit()
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical)
-        End Try
-    End Sub
-
-    Private Sub EjectUSBDriveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EjectUSBDriveToolStripMenuItem.Click
-        EjectUSB()
     End Sub
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Show()
         Activate()
-    End Sub
-
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles btnExit.Click
-        Application.Exit()
-    End Sub
-
-    Private Sub btnEject_Click(sender As Object, e As EventArgs) Handles btnEject.Click
-        EjectUSB()
-    End Sub
-
-    Private Sub btnAbout_Click(sender As Object, e As EventArgs) Handles btnAbout.Click
-        MsgBox("USB Ejected Check was created by Koenvh (koenvh.nl)." & vbCrLf & "Click on the logo bottom right to go to my website.", MsgBoxStyle.Information)
-    End Sub
-
-    Private Sub btnSoundFile_Click(sender As Object, e As EventArgs) Handles btnSoundFile.Click
-        If dlgSoundFile.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            txtSoundFile.Text = dlgSoundFile.FileName
-        End If
     End Sub
 
     Private Sub notifyIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles notifyIcon.MouseDoubleClick
@@ -145,11 +120,7 @@
     End Sub
 
     Private Sub rSilentMode_CheckedChanged(sender As Object, e As EventArgs) Handles rSilentMode.CheckedChanged
-        If rSilentMode.Checked Then
-            InitializeSilentMode()
-        Else
-            DeinitializeSilentMode()
-        End If
+        
     End Sub
 
     Private Sub btnTableRefresh_Click(sender As Object, e As EventArgs) Handles btnTableRenew.Click
@@ -167,18 +138,6 @@
 
     End Sub
 
-    Private Sub rPlaySound_CheckedChanged(sender As Object, e As EventArgs) Handles rPlaySound.CheckedChanged
-        If rPlaySound.Checked Then
-            txtSoundFile.Enabled = True
-            btnSoundFile.Enabled = True
-            lOpenFile.Enabled = True
-        Else
-            txtSoundFile.Enabled = False
-            btnSoundFile.Enabled = False
-            lOpenFile.Enabled = False
-        End If
-    End Sub
-
     Private Sub Button1_Click_2(sender As Object, e As EventArgs) Handles btnCreateShortcut.Click
         If CreateShortcut() = True Then
             MsgBox("Startup entry created succesfully", MsgBoxStyle.Information)
@@ -189,5 +148,30 @@
         If RemoveShortcut() = True Then
             MsgBox("Startup entry removed succesfully", MsgBoxStyle.Information)
         End If
+    End Sub
+
+    Private Sub cUSBDevices_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cUSBDevices.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub rEnabled_Click(sender As Object, e As EventArgs) Handles rEnabled.Click
+        If cUSBDevices.Text = "" Then
+            'Check for a valid USB device string
+            MsgBox("Please select a device first.", MsgBoxStyle.Exclamation)
+        Else
+            ToggleDetection(arrayDrives.Item(cUSBDevices.SelectedIndex)(0))
+        End If
+    End Sub
+
+    Private Sub rSilentMode_Click(sender As Object, e As EventArgs) Handles rSilentMode.Click
+        If rSilentMode.Checked Then
+            InitializeSilentMode()
+        Else
+            DeinitializeSilentMode()
+        End If
+    End Sub
+
+    Private Sub ExitProgramToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitProgramToolStripMenuItem.Click
+        Application.Exit()
     End Sub
 End Class

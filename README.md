@@ -7,6 +7,7 @@ USB Ejected Check is able to:
 - Play a sound when that is the case.
 - Show a message.
 - Run silently on boot, monitoring new USB devices and adding them to the watch list.
+- Automatically detect if it's run from a USB, and protect the device it was run from.
 
 ### How does it work? (The technical side)
 It works in the following manner: The main form is constantly running in the background. When the computer shuts down, the form (and the whole application) will be closed. When that form closes, it checks for the close reason. If that is equal to Windows shutdown, it will invoke checking the USB drive. If it is still there, it will cancel the shutdown and display the message. 
@@ -28,3 +29,6 @@ http://oringz.com/ringtone/lace/
 
 * Text to speech - Acapela:
 http://www.acapela-group.com/
+
+* Me, of course - Koenvh: 
+http://koenvh.nl

@@ -1,5 +1,12 @@
 Changelog:
 
+v1.0.0 - 22/09/2016
+Has been a while, hasn't it? Anyhow, these are things:
+- Removed audio options, as I felt that they were unnecessary and inconvenient.
+- Automatically activate detection when it's run from a USB device.
+- Silent mode now runs with the /silent argument
+- Settings file is now redundant
+
 v0.1.0 - 25/06/2015
 - Check whether an USB device is still present at shutdown.
 - Play a sound when that is the case.
