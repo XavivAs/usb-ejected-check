@@ -73,7 +73,15 @@ Public Module mListUSBDevices
                     'Start process from temp folder to prevent Windows remove safely from saying the drive is busy.
                     Try
                     My.Computer.FileSystem.CopyFile(file, System.IO.Path.GetTempPath() & "\USB Ejected Check.exe", True)
-                    Process.Start(System.IO.Path.GetTempPath() & "\USB Ejected Check.exe", "/auto=" & drive.Name)
+                    Dim startInfo As ProcessStartInfo = New ProcessStartInfo()
+                    startInfo.UseShellExecute = True
+                    startInfo.FileName = System.IO.Path.GetTempPath() & "\USB Ejected Check.exe"
+                    startInfo.Arguments = "/auto=" & drive.Name
+                    startInfo.WorkingDirectory = System.IO.Path.GetTempPath()
+
+                    Process.Start(startInfo)
+
+                    'Process.Start(System.IO.Path.GetTempPath() & "\USB Ejected Check.exe", "/auto=" & drive.Name)
                     Application.Exit()
                     Catch ex As IOException
                         MsgBox("Could not copy file to temporary directory. Switching to manual mode. Is it already running?", MsgBoxStyle.Critical)
